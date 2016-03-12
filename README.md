@@ -1,3 +1,5 @@
+[![AppVeyor](https://img.shields.io/appveyor/ci/gruntjs/grunt.svg)](https://ci.appveyor.com/project/Orwel/textdatagenerator)
+
 Text Data Generator
 ===
 The Text Data Builder can build text from a template. The data can be random number, date time, line in a file...
