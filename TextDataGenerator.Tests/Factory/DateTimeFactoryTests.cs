@@ -16,8 +16,8 @@ namespace TextDataGenerator.Tests.Factory
         {
             {
                 var parameters = new Dictionary<string, string>();
-                parameters.Add("Min", "10-12-2015");
-                parameters.Add("Max", "15-12-2015 14:12:03");
+                parameters.Add("Min", "2015-12-10");
+                parameters.Add("Max", "2015-12-15 14:12:03");
                 parameters.Add("Format", null);
                 var generator = (DateTimeGenerator)FactoryStatic.CreateDataGenerator("DateTime", parameters);
                 Assert.AreEqual(new DateTime(2015, 12, 10), generator.Min);
@@ -26,8 +26,8 @@ namespace TextDataGenerator.Tests.Factory
             }
             {
                 var parameters = new Dictionary<string, string>();
-                parameters.Add("Min", "10-12-2015");
-                parameters.Add("Max", "15-12-2015 14:12:03");
+                parameters.Add("Min", "2015-12-10");
+                parameters.Add("Max", "2015-12-15 14:12:03");
                 parameters.Add("Format", "s");
                 var generator = (DateTimeGenerator)FactoryStatic.CreateDataGenerator("DateTime", parameters);
                 Assert.AreEqual(new DateTime(2015, 12, 10), generator.Min);

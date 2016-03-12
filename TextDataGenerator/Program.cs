@@ -8,7 +8,7 @@ using TextDataGenerator.Tool;
 
 namespace TextDataGenerator
 {
-    internal class Program
+    public class Program
     {
         private static void Main(string[] args)
         {
@@ -48,7 +48,7 @@ namespace TextDataGenerator
             return true;
         }
 
-        private static void InitializeInvariantCuluture() =>
+        public static void InitializeInvariantCuluture() =>
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
     }
 }
