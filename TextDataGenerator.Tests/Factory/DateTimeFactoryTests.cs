@@ -1,7 +1,7 @@
 ﻿// Copyright 2016-2016 Cédric VERNOU. All rights reserved. See LICENCE.md in the project root for license information.
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using TextDataGenerator.Data;
 using TextDataGenerator.Factory;

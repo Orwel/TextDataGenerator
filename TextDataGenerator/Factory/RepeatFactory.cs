@@ -1,26 +1,20 @@
 ﻿// Copyright 2016-2016 Cédric VERNOU. All rights reserved. See LICENCE.md in the project root for license information.
 
 using System;
+using System.ComponentModel.Composition;
 using TextDataGenerator.Builder;
 using TextDataGenerator.Core;
 
 namespace TextDataGenerator.Factory
 {
+    [Export("Repeat", typeof(IFactory))]
     public class RepeatFactory : IFactory
     {
-        public string Type { get { return "Repeat"; } }
-
         [ParameterFactory(IsRequired = true)]
-        public int Min { get; set; }
+        public int Min { get; set; } = 0;
 
         [ParameterFactory]
-        public int Max { get; set; }
-
-        public void ResetDefaultValue()
-        {
-            Min = 0;
-            Max = 0;
-        }
+        public int Max { get; set; } = 0;
 
         public IData CreateDataGenerator()
         {

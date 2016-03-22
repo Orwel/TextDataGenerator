@@ -10,26 +10,7 @@ namespace TextDataGenerator.Factory
 {
     public static class FactoryStatic
     {
-        private static Dictionary<string, IFactory> factories = new Dictionary<string, IFactory>();
-
-        public static IReadOnlyDictionary<string, IFactory> Factories { get { return factories; } }
-
-        static FactoryStatic()
-        {
-            Add(new IntegerFactory());
-            Add(new DoubleFactory());
-            Add(new DateTimeFactory());
-            Add(new RepeatFactory());
-            Add(new FileLineFactory());
-            Add(new TextFactory());
-        }
-
-        private static void Add(IFactory factory)
-        {
-            if (string.IsNullOrWhiteSpace(factory.Type))
-                throw new ArgumentNullException("Factory's type is not valid.");
-            factories.Add(factory.Type, factory);
-        }
+        private static FactoryContainer container = new FactoryContainer();
 
         public static IData CreateDataGenerator(string type, IDictionary<string, string> parameters)
         {
@@ -37,17 +18,13 @@ namespace TextDataGenerator.Factory
                 throw new ArgumentNullException(nameof(type));
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
-            if (factories.ContainsKey(type))
-            {
-                var factory = factories[type];
-                factory.ResetDefaultValue();
-                if (!LinkParameters(factory, parameters))
-                {
-                    throw new InvalidOperationException("Miss parameter of type " + type);
-                }
-                return factory.CreateDataGenerator();
-            }
-            throw new InvalidOperationException("Unknown type : " + type);
+
+            var factory = container.CreateFactory(type);
+
+            if (!LinkParameters(factory, parameters))
+                throw new InvalidOperationException("Miss parameter of type " + type);
+
+            return factory.CreateDataGenerator();
         }
 
         private static bool LinkParameters(IFactory factory, IDictionary<string, string> parameters)

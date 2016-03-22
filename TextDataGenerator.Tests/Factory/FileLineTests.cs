@@ -2,9 +2,9 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using System.Text;
 using TextDataGenerator.Data;
 using TextDataGenerator.Factory;
-using System.Text;
 
 namespace TextDataGenerator.Tests.Factory
 {

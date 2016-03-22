@@ -1,42 +1,32 @@
 ﻿// Copyright 2016-2016 Cédric VERNOU. All rights reserved. See LICENCE.md in the project root for license information.
 
 using System;
+using System.ComponentModel.Composition;
 using TextDataGenerator.Core;
 using TextDataGenerator.Data;
 
 namespace TextDataGenerator.Factory
 {
+    [Export("Text", typeof(IFactory))]
     public class TextFactory : IFactory
     {
-        public string Type { get { return "Text"; } }
+        [ParameterFactory]
+        public int MinParagraph { get; set; } = 0;
 
         [ParameterFactory]
-        public int MinParagraph { get; set; }
+        public int MaxParagraph { get; set; } = 10;
 
         [ParameterFactory]
-        public int MaxParagraph { get; set; }
+        public int MinSentence { get; set; } = 1;
 
         [ParameterFactory]
-        public int MinSentence { get; set; }
+        public int MaxSentence { get; set; } = 10;
 
         [ParameterFactory]
-        public int MaxSentence { get; set; }
+        public int MinWord { get; set; } = 1;
 
         [ParameterFactory]
-        public int MinWord { get; set; }
-
-        [ParameterFactory]
-        public int MaxWord { get; set; }
-
-        public void ResetDefaultValue()
-        {
-            MinParagraph = 0;
-            MaxParagraph = 10;
-            MinSentence = 1;
-            MaxSentence = 10;
-            MinWord = 1;
-            MaxWord = 100;
-        }
+        public int MaxWord { get; set; } = 100;
 
         public IData CreateDataGenerator()
         {

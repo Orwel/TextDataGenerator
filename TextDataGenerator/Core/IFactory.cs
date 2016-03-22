@@ -4,10 +4,6 @@ namespace TextDataGenerator.Core
 {
     public interface IFactory
     {
-        string Type { get; }
-
-        void ResetDefaultValue();
-
-        Core.IData CreateDataGenerator();
+        IData CreateDataGenerator();
     }
 }

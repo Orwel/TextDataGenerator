@@ -1,29 +1,27 @@
 ﻿// Copyright 2016-2016 Cédric VERNOU. All rights reserved. See LICENCE.md in the project root for license information.
 
 using System;
+using System.ComponentModel.Composition;
 using TextDataGenerator.Core;
 using TextDataGenerator.Data;
 
 namespace TextDataGenerator.Factory
 {
+    [Export("DateTime", typeof(IFactory))]
     public class DateTimeFactory : IFactory
     {
-        public string Type { get { return "DateTime"; } }
+        [ParameterFactory]
+        public DateTime Max { get; set; } = DateTime.MaxValue;
 
         [ParameterFactory]
-        public DateTime Max { get; set; }
-
-        [ParameterFactory]
-        public DateTime Min { get; set; }
+        public DateTime Min { get; set; } = DateTime.MinValue;
 
         [ParameterFactory]
         public string Format { get; set; }
 
-        public void ResetDefaultValue()
+        public DateTimeFactory()
         {
-            Format = null;
-            Max = DateTime.MaxValue;
-            Min = DateTime.MinValue;
+            Console.WriteLine("Trololo");
         }
 
         public IData CreateDataGenerator()
