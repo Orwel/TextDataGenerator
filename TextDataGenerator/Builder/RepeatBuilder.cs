@@ -1,32 +1,38 @@
 ﻿// Copyright 2016-2016 Cédric VERNOU. All rights reserved. See LICENCE.md in the project root for license information.
 
-using System.Text;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using TextDataGenerator.Core;
+using TextDataGenerator.Data;
+using TextDataGenerator.Factory;
 
 namespace TextDataGenerator.Builder
 {
-    public class RepeatBuilder : TextBuilder, IBuilder, IData
+    [Export("Repeat", typeof(IFactory))]
+    public class RepeatBuilder : IBuilder
     {
-        public new string EndTag { get { return "EndRepeat"; } }
+        [ParameterFactory(IsRequired = true)]
+        public int Min { get; set; } = 0;
 
-        public int Max { get; }
-        public int Min { get; }
+        [ParameterFactory]
+        public int Max { get; set; } = 0;
 
-        public RepeatBuilder(int max, int min)
+        public string EndTag { get { return "EndRepeat"; } }
+
+        private List<IData> datas = new List<IData>();
+
+        public void Add(IData dataGenerator) => datas.Add(dataGenerator);
+
+        public IData CreateDataGenerator()
         {
-            Max = max;
-            Min = min;
-        }
-
-        public new string GetData()
-        {
-            var builder = new StringBuilder();
-            var nbRepeat = RandomNumber.Random.Next(Min, Max);
-            for (int nRepeat = 0; nRepeat < nbRepeat; nRepeat++)
-            {
-                builder.Append(base.GetData());
-            }
-            return builder.ToString();
+            if (Min <= 0)
+                throw new InvalidOperationException("Min < 1");
+            if (Max == 0)
+                Max = Min;
+            if (Min > Max)
+                throw new InvalidOperationException("Min>Max");
+            return new RepeatData(Max, Min, datas);
         }
     }
 }

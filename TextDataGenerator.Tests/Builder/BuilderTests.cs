@@ -16,11 +16,11 @@ namespace TextDataGenerator.Tests.Builder
         {
             {
                 var text = @"@{Integer} + @{Double}";
-                var builder = (TextBuilder)BuilderStatic.CreateBuilderText(text);
-                Assert.AreEqual(3, builder.Datas.Count);
-                Assert.IsInstanceOfType(builder.Datas[0], typeof(IntegerGenerator));
-                Assert.AreEqual(" + ", builder.Datas[1].GetData());
-                Assert.IsInstanceOfType(builder.Datas[2], typeof(DoubleGenerator));
+                var template = (TemplateData)BuilderStatic.CreateBuilderText(text).CreateDataGenerator();
+                Assert.AreEqual(3, template.Datas.Count);
+                Assert.IsInstanceOfType(template.Datas[0], typeof(IntegerGenerator));
+                Assert.AreEqual(" + ", template.Datas[1].GetData());
+                Assert.IsInstanceOfType(template.Datas[2], typeof(DoubleGenerator));
             }
         }
 
@@ -33,12 +33,12 @@ namespace TextDataGenerator.Tests.Builder
 Easy Test => @{Integer}
 @{EndRepeat}
 ";
-                var builder = (TextBuilder)BuilderStatic.CreateBuilderText(text);
-                Assert.AreEqual(2, builder.Datas.Count);
-                Assert.AreEqual(Environment.NewLine, builder.Datas[0].GetData());
-                Assert.IsInstanceOfType(builder.Datas[1], typeof(RepeatBuilder));
+                var template = (TemplateData)BuilderStatic.CreateBuilderText(text).CreateDataGenerator();
+                Assert.AreEqual(2, template.Datas.Count);
+                Assert.AreEqual(Environment.NewLine, template.Datas[0].GetData());
+                Assert.IsInstanceOfType(template.Datas[1], typeof(RepeatData));
 
-                var repeat = (RepeatBuilder)builder.Datas[1];
+                var repeat = (RepeatData)template.Datas[1];
                 Assert.AreEqual(10, repeat.Min);
                 Assert.AreEqual(30, repeat.Max);
                 Assert.AreEqual(3, repeat.Datas.Count);
@@ -59,7 +59,7 @@ Easy Test => @{Integer}
 Easy Test => @{FailLine 3}
 @{EndRepeat}
 ";
-                    var builder = (TextBuilder)BuilderStatic.CreateBuilderText(text);
+                    var template = (TemplateData)BuilderStatic.CreateBuilderText(text).CreateDataGenerator();
                     Assert.Fail();
                 }
                 catch (BuilderException ex)
@@ -76,7 +76,7 @@ Easy Test => @{FailLine 3}
             foreach (var pathFile in pathFiles)
             {
                 string text = File.ReadAllText(pathFile);
-                BuilderStatic.CreateBuilderText(text);
+                BuilderStatic.CreateBuilderText(text).CreateDataGenerator().GetData();
             }
         }
     }

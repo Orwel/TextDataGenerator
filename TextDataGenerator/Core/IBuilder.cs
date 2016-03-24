@@ -2,7 +2,7 @@
 
 namespace TextDataGenerator.Core
 {
-    public interface IBuilder : IData
+    public interface IBuilder : IFactory
     {
         string EndTag { get; }
 

@@ -3,7 +3,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using TextDataGenerator.Builder;
+using TextDataGenerator.Data;
 using TextDataGenerator.Factory;
 
 namespace TextDataGenerator.Tests.Factory
@@ -17,7 +17,7 @@ namespace TextDataGenerator.Tests.Factory
             try
             {
                 var parameters = new Dictionary<string, string>();
-                var repeat = (RepeatBuilder)FactoryStatic.CreateDataGenerator("Repeat", parameters);
+                var repeat = (RepeatData)FactoryStatic.CreateDataGenerator("Repeat", parameters);
                 Assert.Fail();
             }
             catch (InvalidOperationException) { }
@@ -31,7 +31,7 @@ namespace TextDataGenerator.Tests.Factory
                 var parameters = new Dictionary<string, string>();
                 parameters.Add("Min", "10");
                 parameters.Add("Max", "5");
-                var repeat = (RepeatBuilder)FactoryStatic.CreateDataGenerator("Repeat", parameters);
+                var repeat = (RepeatData)FactoryStatic.CreateDataGenerator("Repeat", parameters);
                 Assert.Fail();
             }
             catch (InvalidOperationException) { }
@@ -46,7 +46,7 @@ namespace TextDataGenerator.Tests.Factory
                 parameters.Add("Bad", "Bad");
                 parameters.Add("Min", "10");
                 parameters.Add("Max", "5");
-                var repeat = (RepeatBuilder)FactoryStatic.CreateDataGenerator("Repeat", parameters);
+                var repeat = (RepeatData)FactoryStatic.CreateDataGenerator("Repeat", parameters);
                 Assert.Fail();
             }
             catch (InvalidOperationException) { }
@@ -58,7 +58,7 @@ namespace TextDataGenerator.Tests.Factory
             {
                 var parameters = new Dictionary<string, string>();
                 parameters.Add("Min", "10");
-                var repeat = (RepeatBuilder)FactoryStatic.CreateDataGenerator("Repeat", parameters);
+                var repeat = (RepeatData)FactoryStatic.CreateDataGenerator("Repeat", parameters);
                 Assert.AreEqual(10, repeat.Max);
                 Assert.AreEqual(10, repeat.Min);
                 repeat.GetData();
@@ -68,7 +68,7 @@ namespace TextDataGenerator.Tests.Factory
                 var parameters = new Dictionary<string, string>();
                 parameters.Add("Min", "10");
                 parameters.Add("Max", "15");
-                var repeat = (RepeatBuilder)FactoryStatic.CreateDataGenerator("Repeat", parameters);
+                var repeat = (RepeatData)FactoryStatic.CreateDataGenerator("Repeat", parameters);
                 Assert.AreEqual(15, repeat.Max);
                 Assert.AreEqual(10, repeat.Min);
                 repeat.GetData();

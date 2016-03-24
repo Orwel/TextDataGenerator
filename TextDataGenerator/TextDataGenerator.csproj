@@ -55,7 +55,7 @@
     <Compile Include="Builder\BuilderException.cs" />
     <Compile Include="Builder\BuilderStatic.cs" />
     <Compile Include="Builder\RepeatBuilder.cs" />
-    <Compile Include="Builder\TextBuilder.cs" />
+    <Compile Include="Builder\TemplateBuilder.cs" />
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Core\IBuilder.cs" />
     <Compile Include="Core\IData.cs" />
@@ -67,6 +67,8 @@
     <Compile Include="Data\DoubleGenerator.cs" />
     <Compile Include="Data\FileLineSelector.cs" />
     <Compile Include="Data\IntegerGenerator.cs" />
+    <Compile Include="Data\RepeatData.cs" />
+    <Compile Include="Data\TemplateData.cs" />
     <Compile Include="Data\TextData.cs" />
     <Compile Include="Data\TextGenerator.cs" />
     <Compile Include="Factory\DateTimeFactory.cs" />
@@ -76,7 +78,6 @@
     <Compile Include="Factory\FileLineFactory.cs" />
     <Compile Include="Factory\IntegerFactory.cs" />
     <Compile Include="Factory\ParameterFactoryAttribute.cs" />
-    <Compile Include="Factory\RepeatFactory.cs" />
     <Compile Include="Core\Setting.cs" />
     <Compile Include="Factory\TextFactory.cs" />
     <Compile Include="Builder\Parsing.cs" />

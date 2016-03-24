@@ -13,7 +13,7 @@ namespace TextDataGenerator.Builder
         {
             var parser = new TextExtractor(fileText);
             var builderStack = new Stack<IBuilder>();
-            builderStack.Push(new TextBuilder());
+            builderStack.Push(new TemplateBuilder());
 
             try
             {
@@ -27,7 +27,7 @@ namespace TextDataGenerator.Builder
                     if (parseStr == builderStack.Peek().EndTag)
                     {
                         var builderPop = builderStack.Pop();
-                        builderStack.Peek().Add(builderPop);
+                        builderStack.Peek().Add(builderPop.CreateDataGenerator());
                         parser.SkeepNewLine();
                         continue;
                     }
@@ -46,14 +46,14 @@ namespace TextDataGenerator.Builder
                         parameters = string.Empty;
                     }
 
-                    var dataGenerator = FactoryStatic.CreateDataGenerator(type, Parsing.GetInfos(parameters));
-                    if (dataGenerator is IBuilder)
+                    var factory = FactoryStatic.CreateFactory(type, Parsing.GetInfos(parameters));
+                    if (factory is IBuilder)
                     {
-                        builderStack.Push((IBuilder)dataGenerator);
+                        builderStack.Push((IBuilder)factory);
                         parser.SkeepNewLine();
                     }
                     else
-                        builderStack.Peek().Add(dataGenerator);
+                        builderStack.Peek().Add(factory.CreateDataGenerator());
                 }
                 AddSubPartTextInBuilder(builderStack.Peek(), parser.NextToEnd());
                 return builderStack.Pop();

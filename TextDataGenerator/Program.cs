@@ -20,7 +20,7 @@ namespace TextDataGenerator
                 {
                     var textFile = TextFile.ReadAllTextFileWithDefaultEncoding(options.Path);
                     var builder = BuilderStatic.CreateBuilderText(textFile);
-                    Console.WriteLine(builder.GetData());
+                    Console.WriteLine(builder.CreateDataGenerator().GetData());
                 }
                 else
                 {

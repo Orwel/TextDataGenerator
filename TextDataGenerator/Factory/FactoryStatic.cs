@@ -12,7 +12,7 @@ namespace TextDataGenerator.Factory
     {
         private static FactoryContainer container = new FactoryContainer();
 
-        public static IData CreateDataGenerator(string type, IDictionary<string, string> parameters)
+        public static IFactory CreateFactory(string type, IDictionary<string, string> parameters)
         {
             if (string.IsNullOrEmpty(type))
                 throw new ArgumentNullException(nameof(type));
@@ -23,7 +23,12 @@ namespace TextDataGenerator.Factory
 
             if (!LinkParameters(factory, parameters))
                 throw new InvalidOperationException("Miss parameter of type " + type);
+            return factory;
+        }
 
+        public static IData CreateDataGenerator(string type, IDictionary<string, string> parameters)
+        {
+            var factory = CreateFactory(type, parameters);
             return factory.CreateDataGenerator();
         }
 

@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using System.Text;
 using TextDataGenerator.Core;
 
-namespace TextDataGenerator.Builder
+namespace TextDataGenerator.Data
 {
-    public class TextBuilder : IBuilder, IData
+    public class TemplateData : IData
     {
         private List<IData> datas = new List<IData>();
 
         public IReadOnlyList<IData> Datas { get { return datas; } }
 
-        public string EndTag { get { return null; } }
-
-        public void Add(IData dataGenerator) => datas.Add(dataGenerator);
+        public TemplateData(List<IData> datas)
+        {
+            this.datas = datas;
+        }
 
         public string GetData()
         {
