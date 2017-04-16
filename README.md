@@ -51,7 +51,7 @@ Data tag
 Data tag are just replaced by text data.
 
 |Prototype|Parameter|Required|Default|
----------|---------|--------|-------|
+|---------|---------|--------|-------|
 |Integer|Min|No|0|
 | |Max|No|int.Max|
 | |Format|No|  |
