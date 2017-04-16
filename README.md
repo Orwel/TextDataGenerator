@@ -26,7 +26,7 @@ This is random decimal 81.60.
 This is random date time 2015-08-11T16:53:51
 This is a repeat :
 Marc LAURENT are you ok?
-Cédric VERNOU are you ok?
+CÃ©dric VERNOU are you ok?
 Laurie TARO are you ok?
 Laurie TARO are you ok?
 Marc LAURENT are you ok?
@@ -50,25 +50,25 @@ Data tag
 ---
 Data tag are just replaced by text data.
 
-Prototype|Parameter|Required|Default
-------------|-------------|---------|------------
-Integer|Min|No|0
- |Max|No|int.Max
- |Format|No|
-Double|Min|No|0
- |Max|No|double.Max
- |Format|No|
-DateTime|Min|Yes|DateTime.MinValue
- |Max|Yes|DateTime.MaxValue
- |Format|No|
-TextLine|Path|Yes|
- |Encoding|No|
-Text|MinParagraph|No|0
- |MaxParagraph|No|10
- |MinSentence|No|1
- |MaxSentence|No|10
- |MinWord|No|10
- |MaxWord|No|100
+|Prototype|Parameter|Required|Default|
+---------|---------|--------|-------|
+|Integer|Min|No|0|
+| |Max|No|int.Max|
+| |Format|No|  |
+|Double|Min|No|0|
+| |Max|No|double.Max|
+| |Format|No| |
+|DateTime|Min|Yes|DateTime.MinValue|
+| |Max|Yes|DateTime.MaxValue|
+| |Format|No| |
+|TextLine|Path|Yes| |
+| |Encoding|No| |
+|Text|MinParagraph|No|0|
+| |MaxParagraph|No|10|
+| |MinSentence|No|1|
+| |MaxSentence|No|10|
+| |MinWord|No|10|
+| |MaxWord|No|100|
 
 Builder tag
 ---
@@ -76,7 +76,7 @@ Builder tag generate more complex text data. It is composed of tag with a end ta
 
 For example, the repeat builder will generate X time the text data. Then the tags in the Repeat will be replaced X time by the builder.
 
-Prototype|End Tag|Parameter|Required|Default
-------------|-----------|-------------|---------|-----------
-Repeat|EndRepeat|Min|Yes|
- ||Max|No|10
+|Prototype|End Tag|Parameter|Required|Default|
+|---------|-------|---------|--------|-------|
+|Repeat|EndRepeat|Min|Yes| |
+| | |Max|No|10|
