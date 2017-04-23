@@ -10,14 +10,11 @@ namespace TextDataGenerator.Tests.Factory
     [TestClass]
     public class IntegerFactoryTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void CreateIntegerGeneratorTest()
         {
             {
-                var parameters = new Dictionary<string, string>();
-                parameters.Add("Min", "10");
-                parameters.Add("Max", "15");
-                parameters.Add("Format", "X.");
+                var parameters = new Dictionary<string, string> {{"Min", "10"}, {"Max", "15"}, {"Format", "X."}};
                 var integerGenerator = (IntegerGenerator)FactoryStatic.CreateDataGenerator("Integer", parameters);
                 Assert.AreEqual(15, integerGenerator.Max);
                 Assert.AreEqual(10, integerGenerator.Min);

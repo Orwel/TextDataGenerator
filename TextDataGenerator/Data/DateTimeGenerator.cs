@@ -5,7 +5,7 @@ using TextDataGenerator.Core;
 
 namespace TextDataGenerator.Data
 {
-    public class DateTimeGenerator : Core.IData
+    public class DateTimeGenerator : IData
     {
         public DateTime Min { get; }
         public DateTime Max { get; }
@@ -20,7 +20,7 @@ namespace TextDataGenerator.Data
 
         public string GetData()
         {
-            DateTime randomDateTime = RandomNumber.NextDateTime(Min, Max);
+            var randomDateTime = RandomNumberProvider.Current.NextDateTime(Min, Max);
             return (Format == null) ? randomDateTime.ToString() : randomDateTime.ToString(Format);
         }
     }

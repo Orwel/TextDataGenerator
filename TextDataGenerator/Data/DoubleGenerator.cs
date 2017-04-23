@@ -19,7 +19,7 @@ namespace TextDataGenerator.Data
 
         public string GetData() => DoubleToString(GetNextDouble());
 
-        public double GetNextDouble() => RandomNumber.NextDouble(Min, Max);
+        public double GetNextDouble() => RandomNumberProvider.Current.NextDouble(Min, Max);
 
         public string DoubleToString(double value) => Format == null ? value.ToString() : value.ToString(Format);
     }

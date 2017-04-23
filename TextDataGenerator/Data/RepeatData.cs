@@ -8,11 +8,11 @@ namespace TextDataGenerator.Data
 {
     public class RepeatData : IData
     {
-        private List<IData> datas = new List<IData>();
+        private readonly List<IData> datas;
 
-        public IReadOnlyList<IData> Datas { get { return datas; } }
+        public IReadOnlyList<IData> Datas => datas;
 
-        public string EndTag { get { return "EndRepeat"; } }
+        public string EndTag => "EndRepeat";
 
         public int Max { get; }
         public int Min { get; }
@@ -27,7 +27,7 @@ namespace TextDataGenerator.Data
         public string GetData()
         {
             var builder = new StringBuilder();
-            var nbRepeat = RandomNumber.Random.Next(Min, Max);
+            var nbRepeat = RandomNumberProvider.Current.NextInt32(Min, Max);
             for (int nRepeat = 0; nRepeat < nbRepeat; nRepeat++)
             {
                 foreach (var data in Datas)

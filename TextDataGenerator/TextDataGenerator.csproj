@@ -52,16 +52,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builder\BuilderException.cs" />
-    <Compile Include="Builder\BuilderStatic.cs" />
+    <Compile Include="Core\RandomNumberProvider.cs" />
+    <Compile Include="Parser\BuilderParserException.cs" />
+    <Compile Include="Parser\Tag.cs" />
+    <Compile Include="Parser\TagParser.cs" />
+    <Compile Include="Parser\TemplateBuilderParser.cs" />
     <Compile Include="Builder\RepeatBuilder.cs" />
     <Compile Include="Builder\TemplateBuilder.cs" />
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Core\IBuilder.cs" />
     <Compile Include="Core\IData.cs" />
     <Compile Include="Core\IFactory.cs" />
-    <Compile Include="Core\RandomNumber.cs" />
-    <Compile Include="Core\TextExtractor.cs" />
+    <Compile Include="Parser\TextExtractor.cs" />
     <Compile Include="Core\TextFile.cs" />
     <Compile Include="Data\DateTimeGenerator.cs" />
     <Compile Include="Data\DoubleGenerator.cs" />
@@ -80,7 +82,7 @@
     <Compile Include="Factory\ParameterFactoryAttribute.cs" />
     <Compile Include="Core\Setting.cs" />
     <Compile Include="Factory\TextFactory.cs" />
-    <Compile Include="Builder\Parsing.cs" />
+    <Compile Include="Parser\TagParameterParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tool\EncodingHelper.cs" />

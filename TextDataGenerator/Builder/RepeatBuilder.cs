@@ -13,14 +13,14 @@ namespace TextDataGenerator.Builder
     public class RepeatBuilder : IBuilder
     {
         [ParameterFactory(IsRequired = true)]
-        public int Min { get; set; } = 0;
+        public int Min { get; set; }
 
         [ParameterFactory]
-        public int Max { get; set; } = 0;
+        public int Max { get; set; }
 
-        public string EndTag { get { return "EndRepeat"; } }
+        public string EndTag => "EndRepeat";
 
-        private List<IData> datas = new List<IData>();
+        private readonly List<IData> datas = new List<IData>();
 
         public void Add(IData dataGenerator) => datas.Add(dataGenerator);
 

@@ -15,9 +15,11 @@ namespace TextDataGenerator.Tests.Factory
         public void CreateFileLineSelectorTest()
         {
             {
-                var parameters = new Dictionary<string, string>();
-                parameters.Add("Path", @".\rsc\FileLine\NamesList.txt");
-                parameters.Add("Encoding", "UTF-8");
+                var parameters = new Dictionary<string, string>
+                {
+                    {"Path", @".\rsc\FileLine\NamesList.txt"},
+                    {"Encoding", "UTF-8"}
+                };
                 var generator = (FileLineSelector)FactoryStatic.CreateDataGenerator("TextLine", parameters);
                 Assert.AreEqual(@".\rsc\FileLine\NamesList.txt", generator.Path);
                 Assert.AreEqual(Encoding.UTF8, generator.Encoding);

@@ -2,8 +2,8 @@
 
 using System;
 using System.Globalization;
-using TextDataGenerator.Builder;
 using TextDataGenerator.Core;
+using TextDataGenerator.Parser;
 using TextDataGenerator.Tool;
 
 namespace TextDataGenerator
@@ -19,7 +19,7 @@ namespace TextDataGenerator
                 if (LoadSettingFromArguments(options))
                 {
                     var textFile = TextFile.ReadAllTextFileWithDefaultEncoding(options.Path);
-                    var builder = BuilderStatic.CreateBuilderText(textFile);
+                    var builder = TemplateBuilderParser.CreateBuilderText(textFile);
                     Console.WriteLine(builder.CreateDataGenerator().GetData());
                 }
                 else
@@ -28,7 +28,7 @@ namespace TextDataGenerator
                     Console.WriteLine(options.GetUsage());
                 }
             }
-            catch (BuilderException bex)
+            catch (BuilderParserException bex)
             {
                 Console.Error.WriteLine(ExceptionHelper.ToStringFull(bex));
             }

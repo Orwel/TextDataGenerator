@@ -11,7 +11,7 @@ namespace TextDataGenerator.Factory
 {
     internal class FactoryContainer : IDisposable
     {
-        private CompositionContainer container;
+        private readonly CompositionContainer container;
 
         public FactoryContainer()
         {
@@ -28,11 +28,11 @@ namespace TextDataGenerator.Factory
                 ImportCardinality.ZeroOrMore,
                 false,
                 false,
-                CreationPolicy.NonShared));
+                CreationPolicy.NonShared)).ToList();
 
-            if (exports == null || exports.Count() == 0)
+            if (exports == null || !exports.Any())
                 throw new InvalidOperationException("Unknown tag type : " + type);
-            if (exports.Count() > 1)
+            if (exports.Count > 1)
                 throw new InvalidOperationException("Know many tag type : " + type);
 
             return (IFactory)exports.FirstOrDefault()?.Value;

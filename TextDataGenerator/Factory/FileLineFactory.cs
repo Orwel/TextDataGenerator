@@ -16,7 +16,7 @@ namespace TextDataGenerator.Factory
         [ParameterFactory]
         public string Encoding
         {
-            set { encoding = System.Text.Encoding.GetEncoding(value); }
+            set => encoding = System.Text.Encoding.GetEncoding(value);
         }
 
         private Encoding encoding = Setting.Encoding;

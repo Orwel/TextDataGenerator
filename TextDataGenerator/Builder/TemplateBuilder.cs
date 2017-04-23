@@ -10,9 +10,9 @@ namespace TextDataGenerator.Builder
     [Export("Template", typeof(IFactory))]
     public class TemplateBuilder : IBuilder
     {
-        private List<IData> datas = new List<IData>();
+        private readonly List<IData> datas = new List<IData>();
 
-        public string EndTag { get { return null; } }
+        public string EndTag => null;
 
         public void Add(IData dataGenerator) => datas.Add(dataGenerator);
 

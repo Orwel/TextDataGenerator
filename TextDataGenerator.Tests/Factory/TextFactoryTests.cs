@@ -14,13 +14,15 @@ namespace TextDataGenerator.Tests.Factory
         public void CreateTextGeneratorTest()
         {
             {
-                var parameters = new Dictionary<string, string>();
-                parameters.Add("MinParagraph", "5");
-                parameters.Add("MaxParagraph", "9");
-                parameters.Add("MinSentence", "10");
-                parameters.Add("MaxSentence", "20");
-                parameters.Add("MinWord", "100");
-                parameters.Add("MaxWord", "200");
+                var parameters = new Dictionary<string, string>
+                {
+                    {"MinParagraph", "5"},
+                    {"MaxParagraph", "9"},
+                    {"MinSentence", "10"},
+                    {"MaxSentence", "20"},
+                    {"MinWord", "100"},
+                    {"MaxWord", "200"}
+                };
                 var generator = (TextGenerator)FactoryStatic.CreateDataGenerator("Text", parameters);
                 Assert.AreEqual(5, generator.MinParagraph);
                 Assert.AreEqual(9, generator.MaxParagraph);

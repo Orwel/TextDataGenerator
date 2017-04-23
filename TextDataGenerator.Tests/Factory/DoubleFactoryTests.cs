@@ -14,10 +14,7 @@ namespace TextDataGenerator.Tests.Factory
         public void CreateDoubleGeneratorTest()
         {
             {
-                var parameters = new Dictionary<string, string>();
-                parameters.Add("Min", "10");
-                parameters.Add("Max", "15");
-                parameters.Add("Format", ".00");
+                var parameters = new Dictionary<string, string> {{"Min", "10"}, {"Max", "15"}, {"Format", ".00"}};
                 var doubleGenerator = (DoubleGenerator)FactoryStatic.CreateDataGenerator("Double", parameters);
                 Assert.AreEqual(15, doubleGenerator.Max);
                 Assert.AreEqual(10, doubleGenerator.Min);

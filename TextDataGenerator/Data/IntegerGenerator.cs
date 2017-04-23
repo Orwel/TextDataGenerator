@@ -19,7 +19,7 @@ namespace TextDataGenerator.Data
 
         public string GetData() => IntegerToString(GetNextInteger());
 
-        public int GetNextInteger() => RandomNumber.Random.Next(Min, Max);
+        public int GetNextInteger() => RandomNumberProvider.Current.NextInt32(Min, Max);
 
         public string IntegerToString(int value) => Format == null ? value.ToString() : value.ToString(Format);
     }

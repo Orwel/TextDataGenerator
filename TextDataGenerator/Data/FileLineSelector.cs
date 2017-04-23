@@ -23,7 +23,7 @@ namespace TextDataGenerator.Data
 
         public string GetData()
         {
-            int selectLine = RandomNumber.Random.Next(0, NbLines - 1);
+            var selectLine = RandomNumberProvider.Current.NextInt32(0, NbLines - 1);
             return ReadLines().Skip(selectLine).First();
         }
 

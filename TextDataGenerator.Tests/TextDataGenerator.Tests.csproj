@@ -52,17 +52,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Builder\BuilderTests.cs" />
+    <Compile Include="Parser\TemplateBuilderParserTests.cs" />
+    <Compile Include="Core\FakeRandomNumberProvider.cs" />
     <Compile Include="Factory\DateTimeFactoryTests.cs" />
     <Compile Include="Factory\DoubleFactoryTests.cs" />
     <Compile Include="Factory\FileLineTests.cs" />
     <Compile Include="Factory\IntegerFactoryTests.cs" />
     <Compile Include="Factory\RepeatFactoryTests.cs" />
     <Compile Include="Factory\TextFactoryTests.cs" />
-    <Compile Include="Builder\ParsingTests.cs" />
+    <Compile Include="Parser\TagParameterParserTest.cs" />
     <Compile Include="InitializeAssemblyTests.cs" />
+    <Compile Include="Parser\TagParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\TextExtractorTests.cs" />
+    <Compile Include="Parser\TextExtractorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\rsc\Example\example1.txt">

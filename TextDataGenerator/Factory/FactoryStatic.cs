@@ -10,7 +10,7 @@ namespace TextDataGenerator.Factory
 {
     public static class FactoryStatic
     {
-        private static FactoryContainer container = new FactoryContainer();
+        private static readonly FactoryContainer container = new FactoryContainer();
 
         public static IFactory CreateFactory(string type, IDictionary<string, string> parameters)
         {
@@ -34,11 +34,11 @@ namespace TextDataGenerator.Factory
 
         private static bool LinkParameters(IFactory factory, IDictionary<string, string> parameters)
         {
-            IDictionary<string, PropertyInfo> validParameters = new Dictionary<string, PropertyInfo>();
-            IDictionary<string, PropertyInfo> requiredParameters = new Dictionary<string, PropertyInfo>();
+            var validParameters = new Dictionary<string, PropertyInfo>();
+            var requiredParameters = new Dictionary<string, PropertyInfo>();
             foreach (var property in factory.GetType().GetProperties())
             {
-                ParameterFactoryAttribute att = property.GetCustomAttributes(typeof(ParameterFactoryAttribute), true).FirstOrDefault() as ParameterFactoryAttribute;
+                var att = property.GetCustomAttributes(typeof(ParameterFactoryAttribute), true).FirstOrDefault() as ParameterFactoryAttribute;
                 if (att == null)
                     continue;
                 if (att.IsRequired)
@@ -51,7 +51,7 @@ namespace TextDataGenerator.Factory
                 }
             }
 
-            int countParameterRequiredSetted = 0;
+            var countParameterRequiredSetted = 0;
             foreach (var parameter in parameters)
             {
                 var key = parameter.Key;
@@ -68,10 +68,10 @@ namespace TextDataGenerator.Factory
                 }
                 throw new InvalidOperationException("Bad parameter : " + key);
             }
-            return requiredParameters.Count() == countParameterRequiredSetted;
+            return requiredParameters.Count == countParameterRequiredSetted;
         }
 
-        private static void SetValue(Object obj, PropertyInfo property, string value)
+        private static void SetValue(object obj, PropertyInfo property, string value)
         {
             var type = property.PropertyType;
             if (type == typeof(string))

@@ -22,7 +22,7 @@ namespace TextDataGenerator
         public static CommandLineOptions CreateAndParse(string[] args)
         {
             var options = new CommandLineOptions();
-            Parser.Default.ParseArguments(args, options);
+            CommandLine.Parser.Default.ParseArguments(args, options);
             return options;
         }
     }

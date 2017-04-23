@@ -14,10 +14,7 @@ namespace TextDataGenerator.Core
 
         public static string ReadAllTextFile(string path, Encoding encoding)
         {
-            if (Setting.Encoding == null)
-                return File.ReadAllText(path);
-            else
-                return File.ReadAllText(path, Setting.Encoding);
+            return Setting.Encoding == null ? File.ReadAllText(path) : File.ReadAllText(path, Setting.Encoding);
         }
     }
 }

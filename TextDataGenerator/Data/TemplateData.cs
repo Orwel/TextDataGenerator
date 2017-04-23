@@ -8,9 +8,9 @@ namespace TextDataGenerator.Data
 {
     public class TemplateData : IData
     {
-        private List<IData> datas = new List<IData>();
+        private readonly List<IData> datas;
 
-        public IReadOnlyList<IData> Datas { get { return datas; } }
+        public IReadOnlyList<IData> Datas => datas;
 
         public TemplateData(List<IData> datas)
         {
