@@ -70,6 +70,26 @@ Easy Test => @{FailLine 3}
         }
 
         [TestMethod]
+        public void CreateBuilderTextTest4()
+        {
+            {
+                const string text = @"@{Repeat Min=""10"",Max=""30""} ""Test""=> @{Integer} @{EndRepeat}";
+                var template = (TemplateData)TemplateBuilderParser.CreateBuilderText(text).CreateDataGenerator();
+                Assert.AreEqual(2, template.Datas.Count);
+                Assert.AreEqual(Environment.NewLine, template.Datas[0].GetData());
+                Assert.IsInstanceOfType(template.Datas[1], typeof(RepeatData));
+
+                var repeat = (RepeatData)template.Datas[1];
+                Assert.AreEqual(10, repeat.Min);
+                Assert.AreEqual(30, repeat.Max);
+                Assert.AreEqual(3, repeat.Datas.Count);
+                Assert.AreEqual(@" ""Test"" => ", repeat.Datas[0].GetData());
+                Assert.IsInstanceOfType(repeat.Datas[1], typeof(IntegerGenerator));
+                Assert.AreEqual(Environment.NewLine, repeat.Datas[2].GetData());
+            }
+        }
+
+        [TestMethod]
         public void RunExamples()
         {
             var pathFiles = Directory.GetFiles(@"rsc\Example");

@@ -19,11 +19,6 @@ namespace TextDataGenerator.Factory
         [ParameterFactory]
         public string Format { get; set; }
 
-        public DateTimeFactory()
-        {
-            Console.WriteLine("Trololo");
-        }
-
         public IData CreateDataGenerator()
         {
             return new DateTimeGenerator(Min, Max, Format);

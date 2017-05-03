@@ -8,20 +8,43 @@ namespace TextDataGenerator.Tests.Parser
     [TestClass]
     public class TagParameterParserTest
     {
-        [TestMethod]
-        public void GetKeyValueTest()
+        [TestClass]
+        public class GetKeyValue
         {
+            [TestMethod]
+            public void RegularCase()
             {
-                var str = "Key=Value";
+                const string str = "Key=Value";
                 var result = TagParameterParser.GetKeyValue(str);
                 Assert.AreEqual("Key", result.Key);
                 Assert.AreEqual("Value", result.Value);
             }
+
+            [TestMethod]
+            public void WithSomeUglySpaces()
             {
-                var str = "Julie=QdGTHJjSDqf";
+                const string str = "  Key  =  Value  ";
                 var result = TagParameterParser.GetKeyValue(str);
-                Assert.AreEqual("Julie", result.Key);
-                Assert.AreEqual("QdGTHJjSDqf", result.Value);
+                Assert.AreEqual("Key", result.Key);
+                Assert.AreEqual("Value", result.Value);
+            }
+
+            [TestMethod]
+            public void ValueBetweenDoubleQuote()
+            {
+                const string str = @"Key=""Value""";
+                var result = TagParameterParser.GetKeyValue(str);
+                Assert.AreEqual("Key", result.Key);
+                Assert.AreEqual("Value", result.Value);
+            }
+
+            [TestMethod]
+            public void ValueBetweenDoubleQuoteWithSomeUglySpaces()
+            {
+                const string str = @"  Key  =  ""Value""  ";
+                var result = TagParameterParser.GetKeyValue(str);
+                Assert.AreEqual("Key", result.Key);
+                Assert.AreEqual("Value", result.Value);
             }
         }
 

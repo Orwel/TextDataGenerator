@@ -1,5 +1,4 @@
-﻿Trololo
-This is random integer 0.
+﻿This is random integer 0.
 This is random decimal -100.00.
 This is random date time 2015-10-12T00:00:00
 This is a repeat :

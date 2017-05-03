@@ -16,6 +16,7 @@ namespace TextDataGenerator.Parser
 
         private static Tag ParseTag(string tag)
         {
+            tag = tag.Trim();
             var indexOfTypeEnd = tag.IndexOf(' ');
             string type;
             string parameters;

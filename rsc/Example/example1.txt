@@ -1,7 +1,7 @@
 This is random integer @{Integer Max=7}.
 This is random decimal @{Double Max=100, Min=-100, Format=.00}.
-This is random date time @{DateTime Min=2015-10-12, Max=2015-12-15 14:12:03,Format=s}
+This is random date time @{DateTime Min=2015-10-12, Max=2015-12-15 14:12:03, Format=s}
 This is a repeat :
 @{Repeat Min=5, Max=20}
-@{TextLine Path=.\rsc\FileLine\NamesList.txt,Encoding=Windows-1252} are you ok?
+@{TextLine Path=.\rsc\FileLine\NamesList.txt, Encoding=Windows-1252} are you ok?
 @{EndRepeat}

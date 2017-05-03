@@ -31,5 +31,17 @@ namespace TextDataGenerator.Tests.Parser
             Assert.AreEqual("TagName", result.Type);
             Assert.AreEqual(2, result.Parameters.Count);
         }
+
+        [TestMethod]
+        public void ParseTagWithParameterAndSomeBadSpace()
+        {
+            var result = TagParser.Parse("@{  TagName  param1  =  val1  ,  param2  =  val2  }");
+            Assert.AreEqual("TagName", result.Type);
+            Assert.AreEqual(2, result.Parameters.Count);
+            Assert.IsTrue(result.Parameters.ContainsKey("param1"));
+            Assert.AreEqual("val1", result.Parameters["param1"]);
+            Assert.IsTrue(result.Parameters.ContainsKey("param2"));
+            Assert.AreEqual("val2", result.Parameters["param2"]);
+        }
     }
 }
