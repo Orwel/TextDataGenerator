@@ -29,7 +29,7 @@ namespace TextDataGenerator.Tests.Parser
         {
             {
                 const string text = @"
-@{Repeat Min=10,Max=30}
+@{Repeat Min=10 Max=30}
 Easy Test => @{Integer}
 @{EndRepeat}
 ";
@@ -55,7 +55,7 @@ Easy Test => @{Integer}
                 try
                 {
                     const string text = @"
-@{Repeat Min=10,Max=30}
+@{Repeat Min=10 Max=30}
 Easy Test => @{FailLine 3}
 @{EndRepeat}
 ";
@@ -73,19 +73,18 @@ Easy Test => @{FailLine 3}
         public void CreateBuilderTextTest4()
         {
             {
-                const string text = @"@{Repeat Min=""10"",Max=""30""} ""Test""=> @{Integer} @{EndRepeat}";
+                const string text = @"@{Repeat Min=""10"" Max=""30""} ""Test""=> @{Integer} @{EndRepeat}";
                 var template = (TemplateData)TemplateBuilderParser.CreateBuilderText(text).CreateDataGenerator();
-                Assert.AreEqual(2, template.Datas.Count);
-                Assert.AreEqual(Environment.NewLine, template.Datas[0].GetData());
-                Assert.IsInstanceOfType(template.Datas[1], typeof(RepeatData));
+                Assert.AreEqual(1, template.Datas.Count);
+                Assert.IsInstanceOfType(template.Datas[0], typeof(RepeatData));
 
-                var repeat = (RepeatData)template.Datas[1];
+                var repeat = (RepeatData)template.Datas[0];
                 Assert.AreEqual(10, repeat.Min);
                 Assert.AreEqual(30, repeat.Max);
                 Assert.AreEqual(3, repeat.Datas.Count);
-                Assert.AreEqual(@" ""Test"" => ", repeat.Datas[0].GetData());
+                Assert.AreEqual(@" ""Test""=> ", repeat.Datas[0].GetData());
                 Assert.IsInstanceOfType(repeat.Datas[1], typeof(IntegerGenerator));
-                Assert.AreEqual(Environment.NewLine, repeat.Datas[2].GetData());
+                Assert.AreEqual(" ", repeat.Datas[2].GetData());
             }
         }
 

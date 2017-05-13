@@ -1,7 +1,8 @@
-﻿// Copyright 2016-2016 Cédric VERNOU. All rights reserved. See LICENCE.md in the project root for license information.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using TextDataGenerator.Builder;
 using TextDataGenerator.Core;
 using TextDataGenerator.Factory;
@@ -16,12 +17,12 @@ namespace TextDataGenerator.Parser
             return parser.Parse();
         }
 
-        private readonly TextExtractor parser;
+        private readonly BrowseText text;
         private readonly Stack<IBuilder> builderStack;
 
         public TemplateBuilderParser(string fileText)
         {
-            parser = new TextExtractor(fileText);
+            text = new BrowseText(fileText);
             builderStack = new Stack<IBuilder>();
             builderStack.Push(new TemplateBuilder());
         }
@@ -30,50 +31,57 @@ namespace TextDataGenerator.Parser
         {
             try
             {
-                for (var subText = parser.Next("@{", true); subText != null; subText = parser.Next("@{", true))
-                {
-                    AddSubPartTextInBuilder(subText);
-                    var tag = ExtractTag();
-                    if (IsEndBuilderTag(tag.Type))
-                    {
-                        EndBuilder();
-                    }
-                    else
-                    {
-                        var factory = FactoryStatic.CreateFactory(tag.Type, tag.Parameters);
-                        var builder = factory as IBuilder;
-                        if (builder != null)
-                        {
-                            StartBuilder(builder);
-                        }
-                        else
-                        {
-                            builderStack.Peek().Add(factory.CreateDataGenerator());
-                        }
-                    }
-                }
-                AddSubPartTextInBuilder(parser.NextToEnd());
-                return builderStack.Pop();
+                return ParseBody();
             }
             catch (Exception ex)
             {
-                throw new BuilderParserException(parser.Line, "Error line " + parser.Line, ex);
+                throw new BuilderParserException(text.CurrentLine(), "", ex);
             }
         }
-
-        private void AddSubPartTextInBuilder(string subText)
+        
+        private IBuilder ParseBody()
         {
+            while (text.Cursor<text.Length)
+            {
+                if (text.StartWith("@{"))
+                {
+                    ParseText();
+                    ParseTag();
+                    if (text.StartWith("@{"))
+                        ParseTag();
+                }
+                text.Move();
+            }
+            ParseText();
+            return builderStack.Pop();
+        }
+
+        private void ParseText()
+        {
+            var subText = text.Read();
             var builder = builderStack.Peek();
             if (subText != string.Empty)
                 builder.Add(new Data.TextData(subText));
         }
 
-        private Tag ExtractTag()
+        private void ParseTag()
         {
-            var tagText = parser.Next("}", false);
-            if (tagText == null)
-                throw new BuilderParserException(parser.Line, "'}' missing.");
-            return TagParser.Parse(tagText);
+            var tag = new TagParser(text).ParseTag();
+            if (IsEndBuilderTag(tag.Type))
+            {
+                EndBuilder();
+                return;
+            }
+            var factory = FactoryStatic.CreateFactory(tag.Type, tag.Parameters);
+            var builder = factory as IBuilder;
+            if (builder != null)
+            {
+                StartBuilder(builder);
+            }
+            else
+            {
+                builderStack.Peek().Add(factory.CreateDataGenerator());
+            }
         }
 
         private bool IsEndBuilderTag(string tag)
@@ -84,14 +92,16 @@ namespace TextDataGenerator.Parser
         private void StartBuilder(IBuilder builder)
         {
             builderStack.Push(builder);
-            parser.SkeepNewLine();
+            text.SkeepNewLine();
+            text.JumpReaderCursorToCursor();
         }
 
         private void EndBuilder()
         {
             var builderPop = builderStack.Pop();
             builderStack.Peek().Add(builderPop.CreateDataGenerator());
-            parser.SkeepNewLine();
+            text.SkeepNewLine();
+            text.JumpReaderCursorToCursor();
         }
     }
 }

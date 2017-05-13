@@ -1,40 +1,133 @@
-﻿// Copyright 2016-2016 Cédric VERNOU. All rights reserved. See LICENCE.md in the project root for license information.
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TextDataGenerator.Parser
 {
-    public static class TagParser
+    public class TagParser
     {
-        public static Tag Parse(string tagStr)
+        private readonly BrowseText text;
+
+        public TagParser(BrowseText text)
         {
-            return ParseTag(ExtractInnerTag(tagStr));
+            this.text = text;
         }
 
-        private static string ExtractInnerTag(string tagStr)
+        public Tag ParseTag()
         {
-            return tagStr.Substring("@{".Length, tagStr.Length - "@{}".Length);
+            MoveToStartOfType();
+            var type = ParseType();
+            var parameters = ParseParameters();
+            text.Move(); //Jump '}' tag end
+            text.JumpReaderCursorToCursor();
+            return new Tag {Type = type, Parameters = parameters};
         }
 
-        private static Tag ParseTag(string tag)
+        private void MoveToStartOfType()
         {
-            tag = tag.Trim();
-            var indexOfTypeEnd = tag.IndexOf(' ');
-            string type;
-            string parameters;
-            if (indexOfTypeEnd > 0)
+            text.Move("@{".Length);
+            text.SkipWhiteChar();
+            text.JumpReaderCursorToCursor();
+        }
+
+        private string ParseType()
+        {
+            var type = string.Empty;
+            while (text.Cursor < text.Length)
             {
-                type = tag.Substring(0, indexOfTypeEnd);
-                parameters = tag.Substring(indexOfTypeEnd + 1);
+                if (text.CurrentIsWhite || text.Current == '}')
+                {
+                    type = text.Read();
+                    text.SkipWhiteChar();
+                    text.JumpReaderCursorToCursor();
+                    break;
+                }
+                text.Move();
             }
+            return type;
+        }
+
+        private Dictionary<string, string> ParseParameters()
+        {
+            var parameters = new Dictionary<string, string>();
+            if (text.Current == '}')
+                return parameters;
+
+            while (text.Current != '}' || text.Cursor < text.Length)
+            {
+                var parameterName = ParseParameterName();
+                var parameterValue = string.Empty;
+                if (text.Current == '=')
+                {
+                    text.Move();
+                    text.SkipWhiteChar();
+                    text.JumpReaderCursorToCursor();
+                    parameterValue = ParseParameterValue();
+                }
+                parameters.Add(parameterName, parameterValue);
+                if (text.Current == '}')
+                    break;
+                text.Move();
+            }
+            return parameters;
+        }
+
+        private string ParseParameterName()
+        {
+            while (text.Current != '}' || text.Cursor < text.Length)
+            {
+                if (text.CurrentIsWhite || text.Current == '}' || text.Current == '=')
+                {
+                    var parameterName = text.Read();
+                    text.SkipWhiteChar();
+                    text.JumpReaderCursorToCursor();
+                    return parameterName;
+                }
+                text.Move();
+            }
+            return string.Empty;
+        }
+
+        private string ParseParameterValue()
+        {
+            string value;
+            if (text.Current == '"')
+                value = ParseParameterValueBetweenDoubleQuote();
             else
+                value = ParseParameterValueWithoutDoubleQuote();
+            text.SkipWhiteChar();
+            text.JumpReaderCursorToCursor();
+            return value;
+        }
+
+        private string ParseParameterValueWithoutDoubleQuote()
+        {
+            while (text.Current != '}' || text.Cursor < text.Length)
             {
-                type = tag;
-                parameters = string.Empty;
+                if (text.CurrentIsWhite || text.Current == '}')
+                    return text.Read();
+                text.Move();
             }
-            return new Tag
+            return string.Empty;
+        }
+
+        private string ParseParameterValueBetweenDoubleQuote()
+        {
+            text.Move();
+            text.JumpReaderCursorToCursor();
+            while (text.Cursor < text.Length)
             {
-                Type = type,
-                Parameters = TagParameterParser.GetInfos(parameters)
-            };
+                if (text.Current == '"')
+                {
+                    var parameterValue = text.Read();
+                    text.Move();
+                    return parameterValue;
+                }
+                text.Move();
+            }
+            return string.Empty;
         }
     }
 }
