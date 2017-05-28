@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextDataGenerator.Parser;
 
 namespace TextDataGenerator.Tests.Parser
@@ -87,13 +82,13 @@ namespace TextDataGenerator.Tests.Parser
         [TestMethod]
         public void ParseTagWithTypeAndParameterAndValueBetweenDoubleQuoteAndSomeBadSpace()
         {
-            var result = ExecuteParseTag(@"@{  TagName  param1  =  val1    param2  =  ""val2""   param3  }");
+            var result = ExecuteParseTag(@"@{  TagName  param1  =  val1    param2  =  ""{val2}""   param3  }");
             Assert.AreEqual("TagName", result.Type);
             Assert.AreEqual(3, result.Parameters.Count);
             Assert.IsTrue(result.Parameters.ContainsKey("param1"));
             Assert.AreEqual("val1", result.Parameters["param1"]);
             Assert.IsTrue(result.Parameters.ContainsKey("param2"));
-            Assert.AreEqual("val2", result.Parameters["param2"]);
+            Assert.AreEqual("{val2}", result.Parameters["param2"]);
             Assert.IsTrue(result.Parameters.ContainsKey("param3"));
             Assert.AreEqual("", result.Parameters["param3"]);
         }

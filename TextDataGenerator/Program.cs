@@ -18,7 +18,7 @@ namespace TextDataGenerator
                 var options = CommandLineOptions.CreateAndParse(args);
                 if (LoadSettingFromArguments(options))
                 {
-                    var textFile = TextFile.ReadAllTextFileWithDefaultEncoding(options.Path);
+                    var textFile = TextFileHelper.ReadAllTextFileWithDefaultEncoding(options.Path);
                     var builder = TemplateBuilderParser.CreateBuilderText(textFile);
                     Console.WriteLine(builder.CreateDataGenerator().GetData());
                 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TextDataGenerator.Parser
 {
@@ -92,11 +88,7 @@ namespace TextDataGenerator.Parser
 
         private string ParseParameterValue()
         {
-            string value;
-            if (text.Current == '"')
-                value = ParseParameterValueBetweenDoubleQuote();
-            else
-                value = ParseParameterValueWithoutDoubleQuote();
+            var value = text.Current == '"' ? ParseParameterValueBetweenDoubleQuote() : ParseParameterValueWithoutDoubleQuote();
             text.SkipWhiteChar();
             text.JumpReaderCursorToCursor();
             return value;

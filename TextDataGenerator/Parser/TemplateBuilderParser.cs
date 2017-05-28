@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TextDataGenerator.Builder;
 using TextDataGenerator.Core;
 using TextDataGenerator.Factory;
@@ -73,8 +70,7 @@ namespace TextDataGenerator.Parser
                 return;
             }
             var factory = FactoryStatic.CreateFactory(tag.Type, tag.Parameters);
-            var builder = factory as IBuilder;
-            if (builder != null)
+            if (factory is IBuilder builder)
             {
                 StartBuilder(builder);
             }

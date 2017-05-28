@@ -64,7 +64,7 @@
     <Compile Include="Core\IBuilder.cs" />
     <Compile Include="Core\IData.cs" />
     <Compile Include="Core\IFactory.cs" />
-    <Compile Include="Core\TextFile.cs" />
+    <Compile Include="Tool\TextFile.cs" />
     <Compile Include="Data\DateTimeGenerator.cs" />
     <Compile Include="Data\DoubleGenerator.cs" />
     <Compile Include="Data\FileLineSelector.cs" />
