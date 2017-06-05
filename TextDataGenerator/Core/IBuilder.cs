@@ -5,7 +5,6 @@ namespace TextDataGenerator.Core
     public interface IBuilder : IFactory
     {
         string EndTag { get; }
-
         void Add(IData dataGenerator);
     }
 }

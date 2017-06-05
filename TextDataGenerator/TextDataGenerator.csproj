@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builder\BuilderBase.cs" />
     <Compile Include="Core\RandomNumberProvider.cs" />
     <Compile Include="Parser\BrowseText.cs" />
     <Compile Include="Parser\BuilderParserException.cs" />

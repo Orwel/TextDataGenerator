@@ -1,6 +1,5 @@
 ﻿// Copyright 2016-2016 Cédric VERNOU. All rights reserved. See LICENCE.md in the project root for license information.
 
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using TextDataGenerator.Core;
 using TextDataGenerator.Data;
@@ -8,17 +7,13 @@ using TextDataGenerator.Data;
 namespace TextDataGenerator.Builder
 {
     [Export("Template", typeof(IFactory))]
-    public class TemplateBuilder : IBuilder
+    public class TemplateBuilder : BuilderBase
     {
-        private readonly List<IData> datas = new List<IData>();
+        public override string EndTag => null;
 
-        public string EndTag => null;
-
-        public void Add(IData dataGenerator) => datas.Add(dataGenerator);
-
-        public IData CreateDataGenerator()
+        public override IData CreateDataGenerator()
         {
-            return new TemplateData(datas);
+            return new TemplateData(Datas);
         }
     }
 }

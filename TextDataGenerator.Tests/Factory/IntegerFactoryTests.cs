@@ -13,14 +13,12 @@ namespace TextDataGenerator.Tests.Factory
         [TestMethod]
         public void CreateIntegerGeneratorTest()
         {
-            {
-                var parameters = new Dictionary<string, string> {{"Min", "10"}, {"Max", "15"}, {"Format", "X."}};
-                var integerGenerator = (IntegerGenerator)FactoryStatic.CreateDataGenerator("Integer", parameters);
-                Assert.AreEqual(15, integerGenerator.Max);
-                Assert.AreEqual(10, integerGenerator.Min);
-                Assert.AreEqual("X.", integerGenerator.Format);
-                integerGenerator.GetData();
-            }
+            var parameters = new Dictionary<string, string> { { "Min", "10"}, {"Max", "15"}, {"Format", "X."} };
+            var integerGenerator = (IntegerGenerator)FactoryStatic.CreateDataGenerator("Integer", parameters);
+            Assert.AreEqual(15, integerGenerator.Max);
+            Assert.AreEqual(10, integerGenerator.Min);
+            Assert.AreEqual("X.", integerGenerator.Format);
+            integerGenerator.GetData();
         }
     }
 }
