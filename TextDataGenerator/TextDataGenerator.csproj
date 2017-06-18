@@ -54,6 +54,9 @@
   <ItemGroup>
     <Compile Include="Builder\BuilderBase.cs" />
     <Compile Include="Core\RandomNumberProvider.cs" />
+    <Compile Include="Core\TagValueContainer.cs" />
+    <Compile Include="Data\IdDataDecorator.cs" />
+    <Compile Include="Data\IdValueData.cs" />
     <Compile Include="Parser\BrowseText.cs" />
     <Compile Include="Parser\BuilderParserException.cs" />
     <Compile Include="Parser\TagParser.cs" />

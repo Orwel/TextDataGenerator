@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using TextDataGenerator.Core;
+using TextDataGenerator.Data;
 
 namespace TextDataGenerator.Factory
 {
     public static class FactoryStatic
     {
         private static readonly FactoryContainer container = new FactoryContainer();
+        private static readonly List<string> ids = new List<string>();
 
         public static IFactory CreateFactory(string type, IDictionary<string, string> parameters)
         {
@@ -19,17 +21,28 @@ namespace TextDataGenerator.Factory
             if (parameters == null)
                 throw new ArgumentNullException(nameof(parameters));
 
-            var factory = container.CreateFactory(type);
+            if (ids.Contains(type))
+                return new IdValueData(type);
 
+            var factory = container.CreateFactory(type);
             if (!LinkParameters(factory, parameters))
                 throw new InvalidOperationException("Miss parameter of type " + type);
-            return factory;
+
+            return parameters.ContainsKey("Id") ? CreateIdDataDecorator(parameters["Id"], factory) : factory;
         }
 
         public static IData CreateDataGenerator(string type, IDictionary<string, string> parameters)
         {
             var factory = CreateFactory(type, parameters);
             return factory.CreateDataGenerator();
+        }
+
+        private static Data.IdDataDecorator CreateIdDataDecorator(string id, IFactory factory)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                throw new InvalidOperationException("Parameter Id can not be empty.");
+            ids.Add(id);
+            return new Data.IdDataDecorator(id, factory.CreateDataGenerator());
         }
 
         private static bool LinkParameters(IFactory factory, IDictionary<string, string> parameters)
@@ -66,6 +79,8 @@ namespace TextDataGenerator.Factory
                     countParameterRequiredSetted++;
                     continue;
                 }
+                if(key == "Id")
+                    continue;
                 throw new InvalidOperationException("Bad parameter : " + key);
             }
             return requiredParameters.Count == countParameterRequiredSetted;

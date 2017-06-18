@@ -80,15 +80,16 @@ Easy Test => @{FailLine 3}
             Assert.AreEqual(" ", repeat.Datas[2].GetData());
         }
 
-        //[TestMethod]
+        [TestMethod]
         public void CreateBuilderTextTest5()
         {
-            const string text = @"@{Integer Id=MyInteger} = @{MyInteger}";
+            const string text = @"@{Integer Id=MyInteger Min=1} = @{MyInteger}";
             var template = (TemplateData)TemplateBuilderParser.CreateBuilderText(text).CreateDataGenerator();
             Assert.AreEqual(3, template.Datas.Count);
-            Assert.IsInstanceOfType(template.Datas[0], typeof(IntegerGenerator));
+            Assert.IsInstanceOfType(template.Datas[0], typeof(IdDataDecorator));
             Assert.AreEqual(" = ", template.Datas[1].GetData());
-            Assert.IsInstanceOfType(template.Datas[2], typeof(DoubleGenerator));
+            Assert.IsInstanceOfType(template.Datas[2], typeof(IdValueData));
+            Assert.AreEqual("1 = 1", template.GetData());
         }
 
         [TestMethod]
